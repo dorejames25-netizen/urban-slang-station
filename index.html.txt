@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="en" data-mood="CYBER_PLASMA">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CARD GAME GENERATOR // STUDIO ENGINE</title>
+  <link rel="stylesheet" href="styles.css">
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;600;800;900&family=Rajdhani:wght@500;600;700&family=Space+Grotesk:wght@400;600&display=swap" rel="stylesheet">
+</head>
+<body>
+
+  <div class="app-container">
+    <!-- TOP NAV -->
+    <header class="app-header">
+      <div class="brand">
+        <div class="brand-logo">CG</div>
+        <div class="brand-text">
+          <h1>CARD ENGINE</h1>
+          <span class="sub">STUDIO v4.0</span>
+        </div>
+      </div>
+
+      <nav class="main-nav">
+        <button class="nav-btn active" data-target="dashboard">Dashboard</button>
+        <button class="nav-btn" data-target="intake">Intake Form</button>
+        <button class="nav-btn" data-target="compiler">Compiler</button>
+        <button class="nav-btn" data-target="matrix">Matrix Grid</button>
+        <button class="nav-btn" data-target="print">Print Centre</button>
+      </nav>
+
+      <div class="mood-selector-container">
+        <span class="mood-label">MOOD ENGINE:</span>
+        <select id="moodSelect" class="mood-dropdown">
+          <option value="CYBER_PLASMA">⚡ CYBER PLASMA (Synthwave)</option>
+          <option value="PINK_CHAOS">💗 PINK CHAOS (Neon Pulse)</option>
+          <option value="GREEN_PARTY">💚 GREEN PARTY (Toxic Glow)</option>
+          <option value="PURPLE_MYSTERY">💜 PURPLE MYSTERY (Void Plasma)</option>
+          <option value="BLACK_FILTH">🖤 BLACK FILTH (Underground)</option>
+        </select>
+      </div>
+    </header>
+
+    <!-- MAIN VIEWS CONTAINER -->
+    <main class="views-wrapper">
+
+      <!-- PAGE 1: DASHBOARD -->
+      <section id="dashboard" class="page-view active">
+        <div class="dashboard-grid">
+          
+          <!-- Studio Hero Plasma Button Trigger -->
+          <div class="hero-card glass-panel">
+            <div class="hero-content">
+              <h2>CREATE NEXT-GEN CARD DECK</h2>
+              <p>Engine status: Ready. Multi-mode theme, customizable swear metre guardrails, decoupled rendering pipeline.</p>
+              
+              <div class="plasma-button-wrapper">
+                <button id="heroStartBtn" class="plasma-button">
+                  <div class="plasma-orb"></div>
+                  <span class="plasma-label">GENERATE GAME</span>
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <!-- Status Panel -->
+          <div class="status-panel glass-panel">
+            <h3>STUDIO METRICS</h3>
+            <div class="metrics-grid">
+              <div class="metric-box">
+                <span class="metric-val">128</span>
+                <span class="metric-lbl">Decks Generated</span>
+              </div>
+              <div class="metric-box">
+                <span class="metric-val">1,200</span>
+                <span class="metric-lbl">Cards Compiled</span>
+              </div>
+              <div class="metric-box">
+                <span class="metric-val" id="currentMoodBadge">CYBER_PLASMA</span>
+                <span class="metric-lbl">Active Mood Theme</span>
+              </div>
+              <div class="metric-box">
+                <span class="metric-val">18+</span>
+                <span class="metric-lbl">Max Rating</span>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </section>
+
+      <!-- PAGE 2: INTAKE FORM -->
+      <section id="intake" class="page-view">
+        <div class="glass-panel intake-container">
+          <h2>DECK SPECIFICATION INTAKE</h2>
+          <form id="intakeForm" class="intake-form">
+            
+            <div class="form-row">
+              <div class="form-group">
+                <label>Game Title</label>
+                <input type="text" id="gameTitle" value="London Pub Chaos" placeholder="e.g. Midnight Confessions">
+              </div>
+
+              <div class="form-group">
+                <label>Age Rating</label>
+                <div class="segmented-control">
+                  <button type="button" class="segment-btn active" data-age="12+">12+</button>
+                  <button type="button" class="segment-btn" data-age="18+">18+</button>
+                </div>
+              </div>
+
+              <div class="form-group">
+                <label>Total Cards</label>
+                <select id="cardCount">
+                  <option value="10">10 Cards (Quick Demo)</option>
+                  <option value="25">25 Cards</option>
+                  <option value="50">50 Cards</option>
+                  <option value="100" selected>100 Cards (Full Deck)</option>
+                </select>
+              </div>
+            </div>
+
+            <!-- Swear Metre LED Control -->
+            <div class="form-group swear-metre-section">
+              <label>SWEAR METRE (LANGUAGE GUARDRAIL)</label>
+              <div class="swear-bar-container">
+                <div class="swear-level-btn level-mild active" data-level="1">
+                  <span>🟢 MILD</span>
+                  <small>Everyday Slang / Light Banter</small>
+                </div>
+                <div class="swear-level-btn level-naughty" data-level="2">
+                  <span>🟡 NAUGHTY</span>
+                  <small>Pub Slang & Stronger Vulgarity</small>
+                </div>
+                <div class="swear-level-btn level-filthy" data-level="3">
+                  <span>🔴 FILTHY</span>
+                  <small>18+ Explicit Adult Uncensored</small>
+                </div>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label>Core Concept / Vision</label>
+              <textarea id="gameIdea" rows="3" placeholder="e.g. A fast-paced London pub game where players trade embarrassing stories or perform cheeky dares."></textarea>
+            </div>
+
+            <button type="button" id="proceedToCompilerBtn" class="action-btn">
+              PROCEED TO AI COMPILER →
+            </button>
+          </form>
+        </div>
+      </section>
+
+      <!-- PAGE 3: COMPILER -->
+      <section id="compiler" class="page-view">
+        <div class="compiler-layout">
+          
+          <!-- Input Parameters -->
+          <div class="glass-panel compiler-input-summary">
+            <h3>INTAKE PARAMETERS</h3>
+            <pre id="intakeJsonSummary">{}</pre>
+            <button id="consultClaudeBtn" class="plasma-button small">
+              <div class="plasma-orb"></div>
+              <span class="plasma-label">CONSULT CLAUDE AI</span>
+            </button>
+          </div>
+
+          <!-- Paste back / JSON Spec Area -->
+          <div class="glass-panel compiler-output-area">
+            <h3>CLAUDE CONSULTATION RESPONSE</h3>
+            <textarea id="claudeOutput" rows="12" placeholder="AI Output will stream here or paste structured JSON game spec..."></textarea>
+            <div class="compiler-actions">
+              <button id="parseJsonBtn" class="action-btn">PARSE & PARSE DECK</button>
+              <button id="sendToMatrixBtn" class="action-btn highlight" disabled>SEND TO MATRIX GRID →</button>
+            </div>
+          </div>
+
+        </div>
+      </section>
+
+      <!-- PAGE 4: MATRIX GRID -->
+      <section id="matrix" class="page-view">
+        <div class="matrix-header glass-panel">
+          <div class="matrix-info">
+            <h2 id="matrixGameTitle">London Pub Chaos</h2>
+            <span id="matrixCardCountBadge">Cards: 100</span>
+          </div>
+
+          <div class="matrix-pagination">
+            <button id="prevBatchBtn" class="pagi-btn">‹ PREV 10</button>
+            <span id="batchIndicator">01 - 10 / 100</span>
+            <button id="nextBatchBtn" class="pagi-btn">NEXT 10 ›</button>
+          </div>
+
+          <div class="template-selector">
+            <label>Card Template:</label>
+            <select id="templateStyleSelect">
+              <option value="RETRO_WAVE">Retrowave Neon</option>
+              <option value="PUB_STANDARD">British Pub Style</option>
+              <option value="MINIMAL_DARK">Minimal Dark</option>
+            </select>
+          </div>
+        </div>
+
+        <!-- MATRIX CARDS CONTAINER -->
+        <div id="matrixGridContainer" class="matrix-grid-display"></div>
+      </section>
+
+      <!-- PRINT CENTRE VIEW -->
+      <section id="print" class="page-view">
+        <div class="glass-panel print-controls">
+          <h2>PRINT CENTRE & EXPORT ENGINE</h2>
+          <p>Export business-card size printable sheet (3.5" x 2.0" @ 300 DPI with Bleed).</p>
+          <button onclick="window.print()" class="action-btn highlight">🖨️ PRINT / EXPORT PDF</button>
+        </div>
+
+        <div class="print-sheet-preview" id="printSheetArea">
+          <!-- Printable cards injected here -->
+        </div>
+      </section>
+
+    </main>
+  </div>
+
+  <script src="data/templates.js"></script>
+  <script src="components/plasma-button.js"></script>
+  <script src="components/matrix-grid.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
