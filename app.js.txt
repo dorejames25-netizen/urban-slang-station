@@ -20,7 +20,7 @@ document.addEventListener('DOMContentLoaded', () => {
   initCompiler();
 });
 
-// ROUTING / NAVIGATION
+// ROUTING & NAVIGATION
 function initNavigation() {
   const navButtons = document.querySelectorAll('.nav-btn');
   navButtons.forEach(btn => {
@@ -30,7 +30,7 @@ function initNavigation() {
     });
   });
 
-  document.getElementById('heroStartBtn').addEventListener('click', () => {
+  document.getElementById('heroStartBtn')?.addEventListener('click', () => {
     switchPage('intake');
   });
 }
@@ -41,12 +41,12 @@ function switchPage(pageId) {
   document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
 
   const activeView = document.getElementById(pageId);
-  if(activeView) activeView.classList.add('active');
+  if (activeView) activeView.classList.add('active');
 
   const navBtn = document.querySelector(`.nav-btn[data-target="${pageId}"]`);
-  if(navBtn) navBtn.classList.add('active');
+  if (navBtn) navBtn.classList.add('active');
 
-  if(pageId === 'matrix') {
+  if (pageId === 'matrix') {
     renderMatrixBatch();
   }
 }
@@ -54,16 +54,33 @@ function switchPage(pageId) {
 // MOOD THEME ENGINE
 function initMoodEngine() {
   const selector = document.getElementById('moodSelect');
-  selector.addEventListener('change', (e) => {
-    const selectedMood = e.target.value;
-    State.currentMood = selectedMood;
-    document.documentElement.setAttribute('data-mood', selectedMood);
-    document.getElementById('currentMoodBadge').textContent = selectedMood;
+  selector?.addEventListener('change', (e) => {
+    setMoodDirect(e.target.value);
   });
+}
+
+function setMoodDirect(moodKey) {
+  State.currentMood = moodKey;
+  document.documentElement.setAttribute('data-mood', moodKey);
+  
+  const badge = document.getElementById('currentMoodBadge');
+  if (badge) badge.textContent = moodKey;
+
+  const selector = document.getElementById('moodSelect');
+  if (selector) selector.value = moodKey;
 }
 
 // INTAKE CONTROLS
 function initIntakeControls() {
+  const ageBtns = document.querySelectorAll('.segment-btn');
+  ageBtns.forEach(btn => {
+    btn.addEventListener('click', () => {
+      ageBtns.forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      State.intakeData.age = btn.getAttribute('data-age');
+    });
+  });
+
   const swearBtns = document.querySelectorAll('.swear-level-btn');
   swearBtns.forEach(btn => {
     btn.addEventListener('click', () => {
@@ -73,7 +90,7 @@ function initIntakeControls() {
     });
   });
 
-  document.getElementById('proceedToCompilerBtn').addEventListener('click', () => {
+  document.getElementById('proceedToCompilerBtn')?.addEventListener('click', () => {
     State.intakeData.title = document.getElementById('gameTitle').value || 'Untitled Game';
     State.intakeData.count = parseInt(document.getElementById('cardCount').value);
     State.intakeData.idea = document.getElementById('gameIdea').value;
@@ -83,24 +100,24 @@ function initIntakeControls() {
   });
 }
 
-// COMPILER SIMULATOR
+// COMPILER ENGINE
 function initCompiler() {
-  document.getElementById('consultClaudeBtn').addEventListener('click', () => {
+  document.getElementById('consultClaudeBtn')?.addEventListener('click', () => {
     const claudeOutput = document.getElementById('claudeOutput');
-    claudeOutput.value = "Consulting Claude AI...\nGenerating " + State.intakeData.count + " structured card payloads...";
+    claudeOutput.value = "Consulting Claude AI...\nCompiling structured card schema for " + State.intakeData.count + " cards...";
     
     setTimeout(() => {
       State.generatedCards = generateMockCards(State.intakeData.count);
       claudeOutput.value = JSON.stringify({
         game: State.intakeData.title,
-        cards: State.generatedCards.slice(0, 3) // Sample view
+        cards: State.generatedCards.slice(0, 3) // Preview slice
       }, null, 2);
       
-      document.getElementById('sendToMatrixBtn').removeAttribute('disabled');
-    }, 1200);
+      document.getElementById('sendToMatrixBtn')?.removeAttribute('disabled');
+    }, 1000);
   });
 
-  document.getElementById('sendToMatrixBtn').addEventListener('click', () => {
+  document.getElementById('sendToMatrixBtn')?.addEventListener('click', () => {
     switchPage('matrix');
   });
 }
@@ -109,11 +126,11 @@ function generateMockCards(total) {
   const types = ['Truth', 'Dare', 'Challenge', 'Pub Rule', 'Voting'];
   const cards = [];
   
-  for(let i = 1; i <= total; i++) {
+  for (let i = 1; i <= total; i++) {
     cards.push({
       id: `CARD-${String(i).padStart(3, '0')}`,
       type: types[Math.floor(Math.random() * types.length)],
-      text: `Mock Game Card ${i}: Share your most embarrassing pub story or drink two forfeit sips!`,
+      text: `Card ${i}: Reveal your most embarrassing pub story or perform 5 pushups!`,
       round: Math.ceil(i / (total / 5))
     });
   }
